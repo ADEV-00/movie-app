@@ -1,3 +1,3 @@
-# Movie App
+# Movie App 🎞️
 
-Simple Movie list app build with React, Typescript and vania CSS.
+Simple Movie list app build with React, Typescript and vanila CSS.
