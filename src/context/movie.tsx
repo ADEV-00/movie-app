@@ -5,7 +5,7 @@ export function getMoviesTVShows(movie: string): Promise<MovieTVShow[]> {
     `${baseURL}/discover/${movie}?sort_by=popularity.desc&api_key=ccb56df6317a72e3939ac7c5bf8082f8`
   )
     .then((res) => res.json())
-    .then((response) => tvShowsData(response.results))
+    .then((response) => moviesTVShowsData(response.results))
     .catch((err) => {
       console.log(err);
       return [];
@@ -17,30 +17,7 @@ const getImagePath = (path: string) =>
 const getBackdropPath = (path: string) =>
   `https://image.tmdb.org/t/p/w370_and_h556_multi_faces${path}`;
 
-function movieData(res: any[]): MovieTVShow[] {
-  return res.map((movie): any => {
-    const {
-      id,
-      original_title,
-      poster_path,
-      backdrop_path,
-      vote_average,
-      overview,
-      release_date,
-    } = movie;
-    return {
-      key: id,
-      title: original_title,
-      poster: getImagePath(poster_path),
-      backdrop: getBackdropPath(backdrop_path),
-      rating: vote_average,
-      description: overview,
-      releaseDate: release_date,
-    };
-  });
-}
-
-function tvShowsData(res: any[]): MovieTVShow[] {
+function moviesTVShowsData(res: any[]): MovieTVShow[] {
   return res.map((movie): any => {
     const {
       id,
@@ -50,10 +27,11 @@ function tvShowsData(res: any[]): MovieTVShow[] {
       vote_average,
       overview,
       release_date,
+      original_title,
     } = movie;
     return {
       key: id,
-      title: original_name,
+      title: original_name || original_title,
       poster: getImagePath(poster_path),
       backdrop: getBackdropPath(backdrop_path),
       rating: vote_average,
