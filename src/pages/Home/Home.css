@@ -1,5 +1,5 @@
 .wrapper {
-  width: 100vw;
+  ,ax-width: 100vw;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -39,4 +39,10 @@
   margin-right: 15px;
   outline: none;
   cursor: pointer;
+}
+
+.movie_list_wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }

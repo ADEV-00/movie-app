@@ -6,6 +6,7 @@ type searchProps = {
 };
 
 const SearchInput = ({ type }: searchProps) => {
+  const [search, setSearch] = React.useState("");
   return (
     <div className="search_wapper">
       <div className="search_icon">
@@ -22,7 +23,13 @@ const SearchInput = ({ type }: searchProps) => {
           />
         </svg>
       </div>
-      <input className="search_input" type="text" placeholder="Search" />
+      <input
+        className="search_input"
+        type="text"
+        placeholder="Search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
     </div>
   );
 };
