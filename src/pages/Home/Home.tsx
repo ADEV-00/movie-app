@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import "./Home.css";
 import { MovieTVShowsContext } from "../../context/context";
 import MovieItem from "../../components/MovieItem/MovieItem";
+import { Link } from "react-router-dom";
 
 type homeProps = {
   handleType: any;
@@ -10,8 +11,6 @@ type homeProps = {
 };
 
 const Home = ({ handleType, movieType }: homeProps) => {
-  const [active, setActive] = useState("");
-  console.log(active);
   const { moviesTVShows } = useContext(MovieTVShowsContext);
   const handleActive = (type: string) => {
     if (movieType === type) {
@@ -37,14 +36,16 @@ const Home = ({ handleType, movieType }: homeProps) => {
             TV Shows
           </button>
         </div>
-        <SearchInput type={"Movies"} />
+        <SearchInput type={movieType} />
         <div className="movie_list_wrapper">
           {moviesTVShows.slice(0, 10).map((movie) => (
-            <MovieItem
-              title={movie.title}
-              image={movie.poster}
-              rating={movie.rating}
-            />
+            <Link to={{ pathname: `/${movie.key}`, state: movieType }}>
+              <MovieItem
+                title={movie.title}
+                image={movie.poster}
+                rating={movie.rating}
+              />
+            </Link>
           ))}
         </div>
       </div>

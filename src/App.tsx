@@ -4,13 +4,13 @@ import { Switch, Route, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import { MovieTVShowsContext } from "./context/context";
 import { MovieTVShow, getMoviesTVShows } from "./context/movie";
+import MovieDetails from "./pages/MovieDetails/MovieDetails";
 
 function App() {
-  const [type, setType] = React.useState("movie");
+  const [type, setType] = React.useState<string>("movie");
   const handleCallBack = (childData: any) => {
     setType(childData);
   };
-
   useEffect(() => {
     getMoviesTVShows(type)
       .then(setMovie)
@@ -30,6 +30,7 @@ function App() {
               <Home handleType={handleCallBack} movieType={type} />
             )}
           />
+          <Route exact path="/:id" component={MovieDetails} />
         </Switch>
       </BrowserRouter>
     </MovieTVShowsContext.Provider>

@@ -41,6 +41,27 @@ function moviesTVShowsData(res: any[]): MovieTVShow[] {
   });
 }
 
+export function searchMovieTVShow(
+  movie: string,
+  search: any
+): Promise<MovieTVShow[]> {
+  return fetch(
+    `${baseURL}/search/${movie}?query=${search}&api_key=ccb56df6317a72e3939ac7c5bf8082f8`
+  )
+    .then((res) => res.json())
+    .then((response) => moviesTVShowsData(response.results))
+    .catch((err) => {
+      console.log(err);
+      return [];
+    });
+}
+
+export function getMovieDetails(type: any, id: string) {
+  return fetch(
+    `${baseURL}/${type}/${id}?api_key=ccb56df6317a72e3939ac7c5bf8082f8`
+  ).then((res) => res.json());
+}
+
 export interface MovieTVShow {
   key: number;
   title: string;

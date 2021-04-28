@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./SearchInput.css";
+import { searchMovieTVShow } from "../../context/movie";
+import { MovieTVShowsContext } from "../../context/context";
+import { debounce } from "debounce";
 
 type searchProps = {
   type: string;
 };
 
 const SearchInput = ({ type }: searchProps) => {
-  const [search, setSearch] = React.useState("");
+  const { searchMoviesTVShows } = React.useContext(MovieTVShowsContext);
+  const [search, setSearch] = React.useState<string>("");
+
+  const handleSearch = debounce((e: any) => {
+    if (e.length < 3) return;
+    searchMovieTVShow(type, e).then((movie) => {
+      searchMoviesTVShows(movie);
+    });
+  }, 1000);
+
+  useEffect(() => {
+    if (search) {
+      handleSearch(search);
+    }
+  }, [search]);
   return (
     <div className="search_wapper">
       <div className="search_icon">
@@ -23,13 +40,17 @@ const SearchInput = ({ type }: searchProps) => {
           />
         </svg>
       </div>
-      <input
-        className="search_input"
-        type="text"
-        placeholder="Search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <form className="search_input" noValidate>
+        <input
+          className="search_input"
+          type="text"
+          placeholder="Search"
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+        />
+      </form>
     </div>
   );
 };
