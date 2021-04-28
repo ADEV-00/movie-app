@@ -8,6 +8,7 @@ import MovieDetails from "./pages/MovieDetails/MovieDetails";
 
 function App() {
   const [type, setType] = React.useState<string>("movie");
+  const [movies, setMovie] = React.useState<MovieTVShow[]>([]);
   const handleCallBack = (childData: any) => {
     setType(childData);
   };
@@ -16,7 +17,6 @@ function App() {
       .then(setMovie)
       .catch((err) => console.log(err));
   }, [type]);
-  const [movies, setMovie] = React.useState<MovieTVShow[]>([]);
   return (
     <MovieTVShowsContext.Provider
       value={{ moviesTVShows: movies, searchMoviesTVShows: setMovie }}
